@@ -1,8 +1,8 @@
-#-*-coding:utf-8-*-
+# -*- coding: utf-8 -*-
 from django.http import JsonResponse
 from news.models import new,cate
 
-# »ñÈ¡Ã¿ÆªĞÂÎÅµÄÇëÇó½Ó¿Ú
+# è·å–æ¯ç¯‡æ–°é—»çš„è¯·æ±‚æ¥å£
 def one(request):
     newid = request.GET.get("newid")
     newone = new.objects.filter(new_id=newid)[0]
@@ -17,7 +17,7 @@ def one(request):
     }
     return JsonResponse(result)
 
-# »ñÈ¡ĞÂÎÅµÄËùÊôÀà±ğ
+# è·å–æ–°é—»çš„æ‰€å±ç±»åˆ«
 def cates(request):
     cateslist = cate.objects.all()
     result = dict()

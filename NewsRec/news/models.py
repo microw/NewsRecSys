@@ -1,6 +1,7 @@
 # -*-coding:utf-8-*-
 from django.db import models
 
+# 新闻类别表
 class cate(models.Model):
     cate_id = models.CharField(blank=False, max_length=64, verbose_name='ID',unique=True)
     cate_name = models.CharField(blank=False, max_length=64, verbose_name='名字')
@@ -10,6 +11,21 @@ class cate(models.Model):
     class Meta:
         db_table = 'cate'
 
+# 新闻与新闻相似表
+class newsim(models.Model):
+    new_id_base = models.CharField(blank=False, max_length=64, verbose_name="ID", unique=True)
+    new_id_sim = models.CharField(blank=False, max_length=64, verbose_name="ID", unique=True)
+    new_correlation = models.FloatField(verbose_name="新闻相关度", blank=False)
+
+    # python 2.7中使用的是__unicode__
+    def __str__(self):
+        return self.new_id_base
+
+    class Meta:
+        db_table = 'newsim'
+
+
+# 新闻表
 class new(models.Model):
     new_id = models.CharField(blank=False, max_length=64, verbose_name="ID", unique=True)
     new_cate = models.ForeignKey(cate, related_name="类别", on_delete=False)

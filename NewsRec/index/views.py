@@ -1,22 +1,22 @@
-#-*-coding:utf-8-*-
+# -*- coding: utf-8 -*-
 
 from django.http import JsonResponse
 from news.models import new,cate
 from datetime import datetime
 
 def home(request):
-    # ´ÓurlÁ´½ÓÖĞ»ñµÃcate
+    # ä»å‰ç«¯è¯·æ±‚ä¸­è·å–cate
     _cate = request.GET.get("cateid")
-    # Èç¹ûÇëÇóµÄÊÇÎªÄãÍÆ¼öÊı¾İ×ß´ËÂß¼­
+    # å¦‚æœcate æ˜¯ä¸ºä½ æ¨èï¼Œèµ°è¯¥éƒ¨åˆ†é€»è¾‘
     if _cate == "1":
         news = getRecNews(_cate)
-    # Èç¹ûÇëÇóµÄÊÇÈÈ°ñÊı¾İ,°´ÕÕÖ¸¶¨Âß¼­·µ»ØÊı¾İ
+    # å¦‚æœcate æ˜¯çƒ­åº¦æ¦œï¼Œèµ°è¯¥éƒ¨åˆ†é€»è¾‘
     elif _cate == "2":
         news,news_hot_value = getHotNews()
-    # ÆäËûÀàĞÍÇëÇó
+    # å…¶ä»–æ­£å¸¸çš„è¯·æ±‚è·å–
     else:
         news = new.objects.filter(new_cate=_cate).order_by("-new_time")[:20]
-    # Æ´½ÓÊı¾İ
+    # æ•°æ®æ‹¼æ¥
     result = dict()
     result["cate_id"] = _cate
     result["cate_name"] = str(cate.objects.get(cate_id=_cate))
@@ -32,18 +32,16 @@ def home(request):
     return JsonResponse(result)
 
 
-# ÈÈ¶È°ñµÄÈ¡ÊıÂß¼­£ºÊ×ÏÈ°´ÕÕÖ¸¶¨¹æÔò´ÓÃ¿¸öÀà±ğÏÂÈ¡top2Êı¾İ£¬×îºóËùÓĞÊı¾İ½øĞĞÅÅĞò£¬·µ»Ø
-#        ÅÅĞòÂß¼­£ºnew_seenum * 0.3 + new_disnum * 0.5 + (new_date-base_data) * 0.2
-
+# çƒ­åº¦æ¦œå•çš„æ•°æ®æ’åºé€»è¾‘ï¼šnew_seenum * 0.3 + new_disnum * 0.5 + (new_date-base_data) * 0.2
 def getHotNews():
     return_news = dict()
     base_time = datetime.now()
-    # ´´½¨±äÁ¿±£´æÃ¿¸öÀàĞÍÏÂµÄtop2ĞÂÎÅ ºÍÃ¿ÆªĞÂÎÅ¶ÔÓ¦µÄÈÈ¶ÈÖµ
+    # åˆ›å»ºå˜é‡ è®°å½•æ‰€æœ‰newsidçš„åˆ—è¡¨å’Œè®°å½•çƒ­åº¦æ–°é—»åŠå…¶çƒ­åº¦å€¼
     all_news_id = list()
     all_news_hot_value = dict()
-    # »ñÈ¡ËùÓĞµÄÀà±ğID
+    # æ•°æ®åº“ä¸­è·å–æ‰€æœ‰æ–°é—»
     cate_list =[one.cate_id for one in cate.objects.filter(cate_id__in=("3","4","5","6","7","8","9"))]
-    # ¸ù¾İÖ¸¶¨·ÖÊıÅÅĞò»ñÈ¡Ã¿¸öÀàĞÍµÄtop2ĞÂÎÅ±£´æÔÚall_new_idÖĞ
+    # éå†æ¯ç¯‡æ–°é—»è·å–æ¯ä¸ªç±»åˆ«ä¸‹çš„top2æ–°é—»
     for cate_one in cate_list:
         new_one_sorted_dict = dict()
         for new_one in new.objects.filter(new_cate_id=cate_one):
@@ -52,10 +50,10 @@ def getHotNews():
         for one in sorted(new_one_sorted_dict.items(), key=lambda l:l[1], reverse=True)[:2]:
             all_news_id.append(one[0])
             all_news_hot_value[one[0]] = one[1]
-    # ¸ù¾İall_news_id»ñÈ¡ĞÂÎÅµÄ¾ßÌåĞÅÏ¢
+    # è¿”å› çƒ­åº¦æ¦œå•æ•°æ®
     return new.objects.filter(new_id__in=all_news_id),all_news_hot_value
 
-# ÎªÄãÍÆ¼ö°ñµ¥Êı¾İ »ñÈ¡
+# ä¸ºä½ æ¨èçš„æ•°æ®è·å–é€»è¾‘
 def getRecNews(_cate):
     news = new.objects.all().order_by("-new_time")[:20]
     return news

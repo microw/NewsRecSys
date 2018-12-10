@@ -1,4 +1,4 @@
-#-*-coding:utf-8-*-
+# -*- coding: utf-8 -*-
 """
  Author: thinkgamer
  Desc：不同预料库下的新闻关键词抽取-基于TFIDF
@@ -35,10 +35,10 @@ class SelectKeyWord:
         news_key_words = list()
         for new_id in self.news_dict.keys():
             # allowPOS 提取地名、名词、动名词、动词
-            keywords = jieba.analyse.extract_tags(self.news_dict[new_id]["title"]+self.news_dict[new_id]["content"],withWeight=True,allowPOS=('ns', 'n', 'vn', 'v'))
+            keywords = jieba.analyse.extract_tags(self.news_dict[new_id]["title"]+self.news_dict[new_id]["content"],topK=10,withWeight=True,allowPOS=('ns', 'n', 'vn', 'v'))
             kws = list()
             for kw in keywords:
-                kws.append( kw[0] +":" +str(kw[1]) )
+                kws.append( kw[0]) # +":" +str(kw[1]) )
             news_key_words.append(str(new_id) + '\t'+",".join(kws) )
         return news_key_words
 
