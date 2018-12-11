@@ -13,8 +13,8 @@ class cate(models.Model):
 
 # 新闻与新闻相似表
 class newsim(models.Model):
-    new_id_base = models.CharField(blank=False, max_length=64, verbose_name="ID", unique=True)
-    new_id_sim = models.CharField(blank=False, max_length=64, verbose_name="ID", unique=True)
+    new_id_base = models.CharField(blank=False, max_length=64, verbose_name="ID_base", unique=False)
+    new_id_sim = models.CharField(blank=False, max_length=64, verbose_name="ID_sim", unique=False)
     new_correlation = models.FloatField(verbose_name="新闻相关度", blank=False)
 
     # python 2.7中使用的是__unicode__

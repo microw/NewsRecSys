@@ -1,11 +1,41 @@
 # -*- coding: utf-8 -*-
 from django.http import JsonResponse
-from news.models import new,cate
+from news.models import new,cate,newsim
 
 # 获取每篇新闻的请求接口
 def one(request):
+    # 获取该新闻的具体信息
     newid = request.GET.get("newid")
     newone = new.objects.filter(new_id=newid)[0]
+    # 获取该新闻的相似新闻
+    flag = "sim"
+    newsim_list = newsim.objects.filter(new_id_base=newid).order_by("-new_correlation")[:5]
+    # 如果相似新闻不存在，拿该类别下的热门新闻填充
+    if newsim_list.__len__() ==0:
+        newsim_list = new.objects.filter(new_cate_id=newone.new_cate).order_by("-new_seenum")[:5]
+        flag = "hot"
+    # 拼接相似新闻信息
+    newsim_list_back = list()
+    for sim_one in newsim_list:
+        # 记录相关度，前端按照此值进行排序
+        cor = 0.0
+        if flag == "sim":
+            sim_one_mess = new.objects.filter(new_id=sim_one.new_id_sim)[0]
+            cor = sim_one.new_correlation
+        elif flag == "hot":
+            cor = sim_one.new_seenum
+            sim_one_mess = sim_one
+        newsim_list_back.append({
+            "new_id": sim_one_mess.new_id,
+            "new_title": sim_one_mess.new_title,
+            "new_time": sim_one_mess.new_time,
+            "new_content": str(sim_one_mess.new_content),
+            "new_seenum": sim_one_mess.new_seenum,
+            "new_disnum": sim_one_mess.new_disnum,
+            "new_cate": sim_one_mess.new_cate.cate_name,
+            "new_cor" : cor
+        })
+    # 拼接总的新闻信息
     result = {
         "new_id": newone.new_id,
         "new_title": newone.new_title,
@@ -13,7 +43,8 @@ def one(request):
         "new_content": str(newone.new_content),
         "new_seenum": newone.new_seenum,
         "new_disnum": newone.new_disnum,
-        "new_cate": newone.new_cate.cate_name
+        "new_cate": newone.new_cate.cate_name,
+        "new_sim":newsim_list_back
     }
     return JsonResponse(result)
 

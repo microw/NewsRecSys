@@ -4,6 +4,13 @@ from django.http import JsonResponse
 from news.models import new,cate
 from datetime import datetime
 
+
+
+def login(request):
+
+    pass
+
+# 主页
 def home(request):
     # 从前端请求中获取cate
     _cate = request.GET.get("cateid")
@@ -30,7 +37,6 @@ def home(request):
             "new_content": str(one.new_content[:100])
         })
     return JsonResponse(result)
-
 
 # 热度榜单的数据排序逻辑：new_seenum * 0.3 + new_disnum * 0.5 + (new_date-base_data) * 0.2
 def getHotNews():

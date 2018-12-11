@@ -125,13 +125,11 @@ APPEND_SLASH=False
 
 #配置静态文件目录
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(os.path.dirname(__file__),'../static')
-#STATICFILES_DIRS=(
-#    os.path.join(BASE_DIR,'static')
-#)
-STATICFILES_DIRS = (
-     ('css',os.path.join(STATIC_ROOT,'css').replace('\\','/') ),
-     ('js',os.path.join(STATIC_ROOT,'js').replace('\\','/') ),
-     ('images',os.path.join(STATIC_ROOT,'images').replace('\\','/') ),
-     ('uploads',os.path.join(STATIC_ROOT,'uploads').replace('\\','/') ),
- )
+
+# 配置全局可允许登录的用户名 主要是为了演示不同用户所看到的首页为你推荐不同
+ALLOW_USERS = ["zhangsan","lisi","wangwu"]
+
+# 配置选择完用户进入下一页可被显示的标签
+ALLOW_TAGS = ["国际要闻","互联网","经济要闻","中国军情","社会公益","书评","影视综艺",
+              "老布什","气候","AI","技术","中国","电商","改革开放","扶贫","慈善",
+              "文化","文学","国风","音乐","综艺","101"]

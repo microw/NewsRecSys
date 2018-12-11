@@ -15,7 +15,7 @@ class Correlation:
     def loadData(self):
         print("开始加载文件数据：%s" % self.file)
         news_tags = dict()
-        for line in open(self.file, "r").readlines():
+        for line in open(self.file, "r", encoding="utf-8").readlines():
             try:
                 newid, newtags = line.strip().split("\t")
                 news_tags[newid] = newtags
@@ -32,8 +32,9 @@ class Correlation:
                 id2_tags = set(self.news_tags[newid2].split(","))
                 if newid1 != newid2:
                     print( newid1 + "\t" + newid2 + "\t" + str(id1_tags & id2_tags) )
-                    cor = ( len(id1_tags & id2_tags) + 1 ) / len (id1_tags | id2_tags)
-                    news_cor_list.append(newid1+","+newid2+","+format(cor,".2f"))
+                    cor = ( len(id1_tags & id2_tags) ) / len (id1_tags | id2_tags)
+                    if cor > 0.0:
+                        news_cor_list.append(newid1+","+newid2+","+format(cor,".2f"))
         return news_cor_list
 
     # 将相关度写入文件
@@ -55,7 +56,7 @@ if __name__ == "__main__":
 
     # 分析
     fileid = 1
-    id = "100094"
+    id = "100005"
     _dict = dict()
     for line in open("./../data/correlation/%s.txt" % fileid, "r").readlines():
         id1, id2, cor = line.strip().split(",")

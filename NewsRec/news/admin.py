@@ -1,6 +1,6 @@
 # -*-coding: utf-8 -*-
 from django.contrib import admin
-from news.models import new,cate
+from news.models import new,cate,newsim
 # Register your models here.
 
 class adminNews(admin.ModelAdmin):
@@ -24,3 +24,13 @@ class adminCate(admin.ModelAdmin):
     list_filter = (  "cate_name",)
 
 admin.site.register(cate, adminCate)
+
+class adminNewSim(admin.ModelAdmin):
+    # 将字段全部显示出来
+    list_display = ("new_id_base", "new_id_sim","new_correlation",)
+    # 添加search bar，在指定的字段中search
+    search_fields = ("new_id_base", "new_id_sim","new_correlation",)
+    # 页面右边会出现相应的过滤器选项
+    # list_filter = ("cate_name",)
+
+admin.site.register(newsim, adminNewSim)

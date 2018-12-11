@@ -9,8 +9,9 @@ import xlrd
 import jieba.analyse
 
 class SelectKeyWord:
-    def __init__(self,file):
+    def __init__(self,file,_type):
         self.file = file
+        self._type = _type
         self.news_dict = self.loadData()
         self.key_words = self.getKeyWords()
 
@@ -33,18 +34,28 @@ class SelectKeyWord:
     # 调用结巴分词获取每篇文章的关键词
     def getKeyWords(self):
         news_key_words = list()
+        # 加载停用词表
+        stop_words_list = [line.strip() for line in open("./../files/stop_words.txt").readlines()]
         for new_id in self.news_dict.keys():
-            # allowPOS 提取地名、名词、动名词、动词
-            keywords = jieba.analyse.extract_tags(self.news_dict[new_id]["title"]+self.news_dict[new_id]["content"],topK=10,withWeight=True,allowPOS=('ns', 'n', 'vn', 'v'))
-            kws = list()
-            for kw in keywords:
-                kws.append( kw[0]) # +":" +str(kw[1]) )
-            news_key_words.append(str(new_id) + '\t'+",".join(kws) )
+            if self._type == 1:
+                # allowPOS 提取地名、名词、动名词、动词
+                keywords = jieba.analyse.extract_tags(self.news_dict[new_id]["title"] +self.news_dict[new_id]["content"],topK=10,withWeight=False,allowPOS=('ns', 'n', 'vn', 'v'))
+                news_key_words.append(str(new_id) + '\t' + ",".join(keywords))
+            elif self._type == 2:
+                # cut_all :False 表示精确模式
+                keywords=jieba.cut(self.news_dict[new_id]["title"],cut_all=False)
+                kws = list()
+                for kw in keywords:
+                    if kw not in stop_words_list and kw != " " and kw != " ":
+                        kws.append(kw)
+                news_key_words.append(str(new_id) + '\t' + ",".join(kws))
+            else:
+                print("请指定获取关键词的方法类型<1：TF-IDF 2：标题分词法>")
         return news_key_words
 
     # 将关键词获取结果写入文件
     def writeToFile(self,file):
-        fw = open("./../data/keywords/%s.txt" % file.split("-")[0],"w")
+        fw = open("./../data/keywords/%s.txt" % file.split("-")[0],"w",encoding="utf-8")
         fw.write("\n".join(self.key_words))
         fw.close()
         print("文件 %s 的关键词写入完毕。" % file)
@@ -53,8 +64,11 @@ if __name__ == "__main__":
     # 原始数据文件路径
     original_data_path = "./../data/original/"
     files = os.listdir(original_data_path)
+    # 关键词提取方式 1：以 title+content使用jieba的extract_tags进行关键词提取
+    #                2：以 title进行分词处理作为文章关键词
+    _type = 2
     for file in files:
         print("开始获取文件 %s 下的关键词。" % file)
-        skw = SelectKeyWord(original_data_path + file )
+        skw = SelectKeyWord(original_data_path + file ,_type)
         skw.writeToFile(file)
     print("\n关键词获取完毕，数据写入路径 z-othersd/data/keywords")
