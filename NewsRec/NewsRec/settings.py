@@ -25,7 +25,7 @@ SECRET_KEY = '!&^5czy=y4ua%33++8%(7ds&-*j0*d$gun$)a85+#z(twn=t!2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.107','127.0.0.1']
+ALLOWED_HOSTS = ['192.168.1.101','127.0.0.1']
 
 
 # Application definition
@@ -71,18 +71,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'NewsRec.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 # mysql config
+DB_HOST = "127.0.0.1"
+DB_PORT = 3306
+DB_USER = "root"
+DB_PASSWD = "123456"
+DB_NAME = "newsrec"
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': "newsrec",
-        'USER': 'root',
-        'PASSWORD': '123456',
-        'HOST': '127.0.0.1',
-        'PORT': '3306'
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'PASSWORD': DB_PASSWD,
+        'HOST': DB_HOST,
+        'PORT': DB_PORT
     }
 }
 
@@ -127,7 +132,7 @@ APPEND_SLASH=False
 STATIC_URL = '/static/'
 
 # 配置全局可允许登录的用户名 主要是为了演示不同用户所看到的首页为你推荐不同
-ALLOW_USERS = ["zhangsan","lisi","wangwu"]
+ALLOW_USERS = ["张三","李四","王五"]
 
 # 配置选择完用户进入下一页可被显示的标签
 ALLOW_TAGS = ["国际要闻","互联网","经济要闻","中国军情","社会公益","书评","影视综艺",

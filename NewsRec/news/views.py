@@ -29,10 +29,10 @@ def one(request):
             "new_id": sim_one_mess.new_id,
             "new_title": sim_one_mess.new_title,
             "new_time": sim_one_mess.new_time,
-            "new_content": str(sim_one_mess.new_content),
-            "new_seenum": sim_one_mess.new_seenum,
-            "new_disnum": sim_one_mess.new_disnum,
-            "new_cate": sim_one_mess.new_cate.cate_name,
+            # "new_content": str(sim_one_mess.new_content),
+            # "new_seenum": sim_one_mess.new_seenum,
+            # "new_disnum": sim_one_mess.new_disnum,
+            "new_cate": sim_one_mess.new_cate.cate_id,
             "new_cor" : cor
         })
     # 拼接总的新闻信息

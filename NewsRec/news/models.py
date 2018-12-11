@@ -42,3 +42,42 @@ class new(models.Model):
 
     class Meta:
         db_table = 'new'
+
+# 新闻热度表
+class newhot(models.Model):
+    new_id = models.CharField(blank=False, max_length=64, verbose_name="ID", unique=True)
+    new_cate = models.ForeignKey(cate, related_name="类别名", on_delete=False)
+    new_hot = models.FloatField(verbose_name="热度值", blank=False)
+
+    # python 2.7中使用的是__unicode__
+    def __str__(self):
+        return self.new_id
+
+    class Meta:
+        db_table = 'newhot'
+
+
+# 新闻标签对应表
+class newtag(models.Model):
+    new_tag = models.CharField(blank=False, max_length=64, verbose_name="标签", unique=False)
+    new_id = models.CharField(blank=False, max_length=64, verbose_name="ID", unique=False)
+    new_hot = models.FloatField(verbose_name="热度值", blank=False)
+
+    # python 2.7中使用的是__unicode__
+    def __str__(self):
+        return self.new_tag
+
+    class Meta:
+        db_table = 'newtag'
+
+# 用户点击表
+class newbrowse(models.Model):
+    user_name = models.CharField(blank=False, max_length=64, verbose_name="用户名", unique=False)
+    new_id = models.CharField(blank=False, max_length=64, verbose_name="ID", unique=False)
+    new_browse_time = models.DateTimeField(blank=False, verbose_name="浏览时间")
+    # python 2.7中使用的是__unicode__
+    def __str__(self):
+        return self.user_name
+
+    class Meta:
+        db_table = 'newbrowse'
