@@ -19,30 +19,9 @@ def login(request):
         uname = request.POST.get('username')
         request.session["username"]=uname
         # 前端将标签以逗号拼接的字符串形式返回
-        tags_list = request.POST.get('tags').split(",")
-        # 如果前端没有选择对应的标签
-        if len(tags_list) == 0:
-            return HttpResponseRedirect("/index/home/?cateid=1")
-        # 如果选择了相应的标签
-        else:
-            news, news_hot_value = getRecNews(request,tag_flag = 1,tags_list = tags_list)
-            # 数据拼接
-            _cate = "1"  # 为你推荐
-            result = dict()
-            result["cate_id"] = _cate
-            result["cate_name"] = str(cate.objects.get(cate_id=_cate))
-            result["news"] = list()
-            for one in news:
-                result["news"].append({
-                    "new_id": one.new_id,
-                    "new_title": str(one.new_title),
-                    "new_time": one.new_time,
-                    "new_hot_value": news_hot_value[one.new_id] if _cate == "2" or _cate == "1" else 0,
-                    "new_content": str(one.new_content[:100])
-                })
-            return JsonResponse(result)
-        pass
-
+        tags= request.POST.get('tags')
+        print("uname: {} , tags: {}".format(uname,tags))
+        return JsonResponse({"username": uname, "tags": tags,"baseclick":0 , "code": 1})
 
 # 主页
 def home(request):
@@ -50,7 +29,7 @@ def home(request):
     _cate = request.GET.get("cateid")
     # 如果cate 是为你推荐，走该部分逻辑 tag_flag = 0 表示不是从标签召回数据
     if _cate == "1":
-        news, news_hot_value = getRecNews(request,tag_flag = 0)
+        news, news_hot_value = getRecNews(request)
     # 如果cate 是热度榜，走该部分逻辑
     elif _cate == "2":
         news,news_hot_value = getHotNews()
@@ -82,20 +61,25 @@ def getHotNews():
     return new.objects.filter(new_id__in=all_news_id),all_news_hot_value
 
 # 为你推荐的数据获取逻辑
-def getRecNews(request,tag_flag,tags_list=None):
+def getRecNews(request):
+    tags = request.GET.get('tags')
+    baseclick = request.GET.get("baseclick")
+    tag_flag = 0 if tags == "" else 1
+    tags_list= tags.split(",")
     uname = request.session["username"]
-    num = (20 / len(tags_list)) + 1
     # 走标签召回逻辑
-    if tag_flag == 1:
+    if tag_flag == 1 and baseclick == 0:
+        num = (20 / len(tags_list)) + 1
         news_id_list = list()
         news_id_hot_dict = dict()
         for tag in tags_list:
             result = newtag.objects.filter(new_tag=tag).values("new_id","new_hot")[:num]
-            news_id_list.append(result["new_id"])
-            news_id_hot_dict[result["new_id"]] = result["new_hot"]
+            for one in result:
+                news_id_list.append(one["new_id"])
+                news_id_hot_dict[one["new_id"]] = one["new_hot"]
         return new.objects.filter(new_id__in=news_id_list)[:20], news_id_hot_dict
     # 走正常排序逻辑
-    elif tag_flag ==0:
+    elif tag_flag ==0 and baseclick == 1:
         # 首先判断用户是否有浏览记录
         # 如果有该用户的浏览记录 则从浏览的新闻获取相似的新闻返回
         if newbrowse.objects.filter(user_name=uname).exists():
@@ -121,6 +105,7 @@ def getRecNews(request,tag_flag,tags_list=None):
             all_news = newhot.objects.order_by("-new_hot").values("new_id", "new_hot")[20:40]
             all_news_id = [one["new_id"] for one in all_news]
             all_news_hot_value = {one["new_id"]: one["new_hot"] for one in all_news}
+            print(all_news_hot_value)
             # 返回 热度榜单数据
             return new.objects.filter(new_id__in=all_news_id), all_news_hot_value
 
@@ -135,4 +120,5 @@ def switchuser(request):
         # 删除session值
         del request.session["username"]
         print("用户: %s 执行了切换用户动作，删除其对应的session值 ..." % uname)
-    return HttpResponseRedirect("/index/login/")
+    return JsonResponse({"code":1})
+    # return HttpResponseRedirect("/index/login/")

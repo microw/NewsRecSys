@@ -1,12 +1,17 @@
 # -*- coding: utf-8 -*-
 from django.http import JsonResponse
-from news.models import new,cate,newsim
+from news.models import new,cate,newsim,newbrowse
+import time
 
 # 获取每篇新闻的请求接口
 def one(request):
     # 获取该新闻的具体信息
     newid = request.GET.get("newid")
     newone = new.objects.filter(new_id=newid)[0]
+    # 将用户的点击新闻信息写入数据库
+    uname = request.session["username"]
+    newbtime = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+    newbrowse.objects.create(user_name=uname,new_id=newid,new_browse_time=newbtime).save()
     # 获取该新闻的相似新闻
     flag = "sim"
     newsim_list = newsim.objects.filter(new_id_base=newid).order_by("-new_correlation")[:5]
