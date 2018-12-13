@@ -68,7 +68,7 @@ def getRecNews(request):
     tags_list= tags.split(",")
     uname = request.session["username"]
     # 走标签召回逻辑
-    if tag_flag == 1 and baseclick == 0:
+    if tag_flag == 1 and int(baseclick) == 0:
         num = (20 / len(tags_list)) + 1
         news_id_list = list()
         news_id_hot_dict = dict()
@@ -79,7 +79,7 @@ def getRecNews(request):
                 news_id_hot_dict[one["new_id"]] = one["new_hot"]
         return new.objects.filter(new_id__in=news_id_list)[:20], news_id_hot_dict
     # 走正常排序逻辑
-    elif tag_flag ==0 and baseclick == 1:
+    elif tag_flag ==0:
         # 首先判断用户是否有浏览记录
         # 如果有该用户的浏览记录 则从浏览的新闻获取相似的新闻返回
         if newbrowse.objects.filter(user_name=uname).exists():
