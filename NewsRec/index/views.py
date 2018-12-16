@@ -20,13 +20,13 @@ def login(request):
         request.session["username"]=uname
         # 前端将标签以逗号拼接的字符串形式返回
         tags= request.POST.get('tags')
-        print("uname: {} , tags: {}".format(uname,tags))
         return JsonResponse({"username": uname, "tags": tags,"baseclick":0 , "code": 1})
 
 # 主页
 def home(request):
     # 从前端请求中获取cate
     _cate = request.GET.get("cateid")
+    total = 0 # 总页数
     # 如果cate 是为你推荐，走该部分逻辑 tag_flag = 0 表示不是从标签召回数据
     if _cate == "1":
         news, news_hot_value = getRecNews(request)
@@ -35,9 +35,13 @@ def home(request):
         news,news_hot_value = getHotNews()
     # 其他正常的请求获取
     else:
-        news = new.objects.filter(new_cate=_cate).order_by("-new_time")[:20]
+        _page_id = int(request.GET.get("pageid"))
+        news = new.objects.filter(new_cate=_cate).order_by("-new_time")
+        total = news.__len__()
+        news = news[_page_id * 10:(_page_id+1) * 10]
     # 数据拼接
     result = dict()
+    result["total"] = total
     result["cate_id"] = _cate
     result["cate_name"] = str(cate.objects.get(cate_id=_cate))
     result["news"] = list()
@@ -46,6 +50,7 @@ def home(request):
             "new_id":one.new_id,
             "new_title":str(one.new_title),
             "new_time": one.new_time,
+            "new_cate": one.new_cate.cate_name,
             "new_hot_value": news_hot_value[one.new_id] if _cate == "2" or _cate == "1" else 0 ,
             "new_content": str(one.new_content[:100])
         })

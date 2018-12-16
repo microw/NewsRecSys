@@ -3,15 +3,15 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
+const serverUrl = 'http://192.168.1.101:8000'
 
 module.exports = {
   dev: {
-
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target:'http://127.0.0.1:8000',
+        target: serverUrl,
         changeOrigin:true,
         pathRewrite: {
           '^/api': ''

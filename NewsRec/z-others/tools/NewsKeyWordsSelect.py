@@ -39,7 +39,12 @@ class SelectKeyWord:
         for new_id in self.news_dict.keys():
             if self._type == 1:
                 # allowPOS 提取地名、名词、动名词、动词
-                keywords = jieba.analyse.extract_tags(self.news_dict[new_id]["title"] +self.news_dict[new_id]["content"],topK=10,withWeight=False,allowPOS=('ns', 'n', 'vn', 'v'))
+                keywords = jieba.analyse.extract_tags(
+                    self.news_dict[new_id]["title"] +self.news_dict[new_id]["content"],
+                    topK=10,
+                    withWeight=False,
+                    allowPOS=('ns', 'n', 'vn', 'v')
+                )
                 news_key_words.append(str(new_id) + '\t' + ",".join(keywords))
             elif self._type == 2:
                 # cut_all :False 表示精确模式
