@@ -163,8 +163,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="22" selection-start-line="22" selection-end-line="22" />
+            <state relative-caret-position="198">
+              <caret line="21" column="38" lean-forward="true" selection-start-line="21" selection-start-column="38" selection-end-line="21" selection-end-column="38" />
               <folding>
                 <element signature="e#25#83#0" expanded="true" />
                 <marker date="1544944880353" expanded="true" signature="769:770" ph="..." />
@@ -256,42 +256,6 @@
             <path>
               <item name="NewsRec" type="b2602c69:ProjectViewProjectNode" />
               <item name="NewsRec" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="NewsRec" type="b2602c69:ProjectViewProjectNode" />
-              <item name="NewsRec" type="462c0819:PsiDirectoryNode" />
-              <item name="NewsRec" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="NewsRec" type="b2602c69:ProjectViewProjectNode" />
-              <item name="NewsRec" type="462c0819:PsiDirectoryNode" />
-              <item name="z-others" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="NewsRec" type="b2602c69:ProjectViewProjectNode" />
-              <item name="NewsRec" type="462c0819:PsiDirectoryNode" />
-              <item name="z-others" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="NewsRec" type="b2602c69:ProjectViewProjectNode" />
-              <item name="NewsRec" type="462c0819:PsiDirectoryNode" />
-              <item name="z-others" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-              <item name="keywords" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="NewsRec" type="b2602c69:ProjectViewProjectNode" />
-              <item name="NewsRec" type="462c0819:PsiDirectoryNode" />
-              <item name="z-others" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-              <item name="original" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="NewsRec" type="b2602c69:ProjectViewProjectNode" />
-              <item name="NewsRec" type="462c0819:PsiDirectoryNode" />
-              <item name="z-others" type="462c0819:PsiDirectoryNode" />
-              <item name="tools" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -506,9 +470,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20045386" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20045386" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -521,7 +484,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32840723" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.41215107" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.41215107" />
       <window_info anchor="bottom" id="Event Log" order="11" weight="0.31034482" />
       <window_info anchor="bottom" id="Python Console" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -753,8 +716,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        <state relative-caret-position="198">
+          <caret line="21" column="38" lean-forward="true" selection-start-line="21" selection-start-column="38" selection-end-line="21" selection-end-column="38" />
           <folding>
             <element signature="e#25#83#0" expanded="true" />
             <marker date="1544944880353" expanded="true" signature="769:770" ph="..." />
