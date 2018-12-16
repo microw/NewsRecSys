@@ -73,15 +73,20 @@ export default {
       if (cateId === '2') {
         this.loading('加载中。。。')
         getdata = {
-          cateid: '2'
+          cateid: '2',
+          userName: this.$store.state.vuexlogin.userName
         }
         getCateNewsData(getdata).then((res) => {
-          res.news.forEach((item) => {
-            this.$layer.closeAll()
-            item.new_time = this.timeFormat(item.new_time)
-          })
-          this.total = res.total
-          this.hot_newsData = res
+          if (!res.code) {
+            this.$children[0].layout()
+          } else {
+            res.news.forEach((item) => {
+              this.$layer.closeAll()
+              item.new_time = this.timeFormat(item.new_time)
+            })
+            this.total = res.total
+            this.hot_newsData = res
+          }
         }, (err) => {
           this.$layer.msg('小主稍等，紧急恢复中。。。')
         })
@@ -101,23 +106,28 @@ export default {
         }
         getdata.cateid = '1'
         this.isActive = cateId
+        getdata.userName = this.$store.state.vuexlogin.userName
         getCateNewsData(getdata).then((res) => {
           this.$layer.closeAll()
-          res.news.forEach((item) => {
-            item.new_time = this.timeFormat(item.new_time)
-          })
-          this.total = res.total
-          this.newsData = res
-          if (res.news.length >= 10) {
-            let arr1 = res.news.slice(0, 10)
-            let arr2 = res.news.slice(11)
-            this.newsData.news = arr1
-            this.newsOtherdata.news = arr2
-            this.morebtn = true
+          if (!res.code) {
+            this.$children[0].layout()
           } else {
+            res.news.forEach((item) => {
+              item.new_time = this.timeFormat(item.new_time)
+            })
+            this.total = res.total
             this.newsData = res
-            this.newsOtherdata = {}
-            this.morebtn = false
+            if (res.news.length >= 10) {
+              let arr1 = res.news.slice(0, 10)
+              let arr2 = res.news.slice(11)
+              this.newsData.news = arr1
+              this.newsOtherdata.news = arr2
+              this.morebtn = true
+            } else {
+              this.newsData = res
+              this.newsOtherdata = {}
+              this.morebtn = false
+            }
           }
         }, (err) => {
           this.$layer.msg('小主稍等，紧急恢复中。。。')
@@ -133,13 +143,18 @@ export default {
         } else {
           getdata.pageid = 1
         }
+        getdata.userName = this.$store.state.vuexlogin.userName
         getCateNewsData(getdata).then((res) => {
           this.$layer.closeAll()
-          res.news.forEach((item) => {
-            item.new_time = this.timeFormat(item.new_time)
-          })
-          this.total = res.total
-          this.newsData = res
+          if (!res.code) {
+            this.$children[0].layout()
+          } else {
+            res.news.forEach((item) => {
+              item.new_time = this.timeFormat(item.new_time)
+            })
+            this.total = res.total
+            this.newsData = res
+          }
         }, (err) => {
           this.$layer.msg('小主稍等，紧急恢复中。。。')
         })

@@ -73,6 +73,7 @@ export default {
       console.log(logininfo)
       login(logininfo).then((res) => {
         if (res.code) {
+          localStorage.setItem('newslogintime', new Date())
           this.almuta(true)
           this.almuuser(res.username)
           this.$router.push({path: '/', query: {'username': res.username, 'tags': res.tags, 'baseclick': 0}})

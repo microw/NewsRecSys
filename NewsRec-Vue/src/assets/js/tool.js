@@ -41,4 +41,14 @@ exports.install = function (Vue, options) {
       shadeClose: false
     })
   }
+  // 时间差计算
+  Vue.prototype.deTime = function (time, newtime, efftime) {
+    let t1 = new Date(time)
+    let t2 = new Date(newtime)
+    let detime = parseInt(t2 - t1) / 1000 / 3600
+    // console.log(detime + 'iiii' + efftime)
+    if (detime > efftime) {
+      this.$children[0].$children[0].layout()
+    }
+  }
 }

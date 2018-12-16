@@ -11,6 +11,11 @@ export default {
   name: 'App',
   components: {
     'new-footer': newFooter
+  },
+  mounted () {
+    if (localStorage.getItem('newslogintime')) {
+      this.deTime(localStorage.getItem('newslogintime'), new Date(), 1)
+    }
   }
 }
 </script>

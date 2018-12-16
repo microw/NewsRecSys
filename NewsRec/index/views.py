@@ -26,6 +26,8 @@ def login(request):
 def home(request):
     # 从前端请求中获取cate
     _cate = request.GET.get("cateid")
+    if "username" not in request.session.keys():
+        return JsonResponse({ "code":0 })
     total = 0 # 总页数
     # 如果cate 是为你推荐，走该部分逻辑 tag_flag = 0 表示不是从标签召回数据
     if _cate == "1":
@@ -41,6 +43,7 @@ def home(request):
         news = news[_page_id * 10:(_page_id+1) * 10]
     # 数据拼接
     result = dict()
+    result["code"] = 2
     result["total"] = total
     result["cate_id"] = _cate
     result["cate_name"] = str(cate.objects.get(cate_id=_cate))

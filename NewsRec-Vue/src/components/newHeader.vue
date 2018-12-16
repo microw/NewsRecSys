@@ -49,6 +49,7 @@ export default {
     layout: function () {
       layout().then((res) => {
         if (res.code) {
+          localStorage.removeItem('newslogintime')
           localStorage.removeItem('username', '')
           localStorage.removeItem('islogin', false)
           this.almuta(localStorage.getItem('islogin'))
@@ -56,20 +57,23 @@ export default {
           this.$router.push('/login')
         }
       }, (err) => {
-        console.log(2222)
         console.log(err)
       })
     },
     getCates: function () {
       this.loading('加载中。。。')
       getCateData().then((res) => {
-        res.data.forEach((item, index) => {
-          if (item.cate_id === '2') {
-            res.data.splice(index, 1)
-          }
-        })
-        this.$layer.closeAll()
-        this.datas = res.data
+        if (!res.code) {
+          this.layout()
+        } else {
+          res.data.forEach((item, index) => {
+            if (item.cate_id === '2') {
+              res.data.splice(index, 1)
+            }
+          })
+          this.$layer.closeAll()
+          this.datas = res.data
+        }
       }, (err) => {
         this.$layer.msg('小主稍等，紧急恢复中。。。')
       })
@@ -77,7 +81,6 @@ export default {
   },
   mounted () {
     this.serverlink = serverUrl + '/admin/'
-    console.log()
     this.getCates()
   }
 }

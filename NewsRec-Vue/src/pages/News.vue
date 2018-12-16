@@ -41,14 +41,19 @@ export default {
   methods: {
     getNews: function (option) {
       this.loading('加载中。。。')
+      option.userName = this.$store.state.vuexlogin.userName
       getNewsData(option).then((res) => {
         this.$layer.closeAll()
-        res.new_time = this.timeFormat(res.new_time)
-        res.new_sim.forEach(item => {
-          item.new_time = this.timeFormat(item.new_time)
-        })
-        res.new_content = this.returnline(res.new_content, '\\n', '</br>')
-        this.newDesc = res
+        if (!res.code) {
+          this.$children[0].layout()
+        } else {
+          res.new_time = this.timeFormat(res.new_time)
+          res.new_sim.forEach(item => {
+            item.new_time = this.timeFormat(item.new_time)
+          })
+          res.new_content = this.returnline(res.new_content, '\\n', '</br>')
+          this.newDesc = res
+        }
       }, (err) => {
         this.$layer.msg(err)
       })

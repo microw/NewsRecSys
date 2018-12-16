@@ -10,6 +10,8 @@ def one(request):
     newone = new.objects.filter(new_id=newid)[0]
     # 将用户的点击新闻信息写入数据库
     uname = request.session["username"]
+    if "username" not in request.session.keys():
+        return JsonResponse({"code": 0})
     newbtime = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
     newbrowse.objects.create(user_name=uname,new_id=newid,new_browse_time=newbtime).save()
     # 获取该新闻的相似新闻
@@ -42,6 +44,7 @@ def one(request):
         })
     # 拼接总的新闻信息
     result = {
+        "code":2,
         "new_id": newone.new_id,
         "new_title": newone.new_title,
         "new_time": newone.new_time,
@@ -55,9 +58,12 @@ def one(request):
 
 # 获取新闻的所属类别
 def cates(request):
+    if "username" not in request.session.keys():
+        return JsonResponse({"code": 0})
     cateslist = cate.objects.all()
     result = dict()
     result["data"]=list()
+    result["code"] = 2
     for cateone in cateslist:
         result["data"].append({
             "cate_id":cateone.cate_id,
