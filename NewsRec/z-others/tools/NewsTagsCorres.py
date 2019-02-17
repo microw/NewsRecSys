@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """
- Author: thinkgamer
- Desc：获取NewsRec/settings.py中配置的前端展示的标签下的新闻
+    Author: thinkgamer
+    Desc:
+        代码11-4 获取NewsRec/settings.py中配置的前端展示的标签下的新闻
 """
 
 import pymysql

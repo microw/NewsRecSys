@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """
- Author: thinkgamer
- Desc：新闻的热度值计算，并写入数据库
+    Author: thinkgamer
+    Desc：
+        代码11-1 新闻的热度值计算，并写入数据库
 """
 from datetime import datetime
 import pymysql

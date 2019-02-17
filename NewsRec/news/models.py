@@ -10,6 +10,7 @@ class cate(models.Model):
         return self.cate_name
     class Meta:
         db_table = 'cate'
+        verbose_name_plural = "新闻类别表"
 
 # 新闻与新闻相似表
 class newsim(models.Model):
@@ -23,6 +24,7 @@ class newsim(models.Model):
 
     class Meta:
         db_table = 'newsim'
+        verbose_name_plural = "新闻相似度表"
 
 
 # 新闻表
@@ -42,6 +44,7 @@ class new(models.Model):
 
     class Meta:
         db_table = 'new'
+        verbose_name_plural = "新闻信息表"
 
 # 新闻热度表
 class newhot(models.Model):
@@ -55,6 +58,7 @@ class newhot(models.Model):
 
     class Meta:
         db_table = 'newhot'
+        verbose_name_plural = "新闻热度表"
 
 
 # 新闻标签对应表
@@ -69,6 +73,7 @@ class newtag(models.Model):
 
     class Meta:
         db_table = 'newtag'
+        verbose_name_plural = "新闻标签表"
 
 # 用户点击表
 class newbrowse(models.Model):
@@ -81,3 +86,4 @@ class newbrowse(models.Model):
 
     class Meta:
         db_table = 'newbrowse'
+        verbose_name_plural = "用户点击表"

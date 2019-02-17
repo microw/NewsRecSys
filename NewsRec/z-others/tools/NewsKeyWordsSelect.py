@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """
- Author: thinkgamer
- Desc：不同预料库下的新闻关键词抽取-基于TFIDF
+    Author: thinkgamer
+    Desc：
+        代码11-2 不同语料库下的新闻关键词抽取-基于TFIDF
 """
 
 import os
@@ -69,11 +70,11 @@ if __name__ == "__main__":
     # 原始数据文件路径
     original_data_path = "./../data/original/"
     files = os.listdir(original_data_path)
-    # 关键词提取方式 1：以 title+content使用jieba的extract_tags进行关键词提取
-    #                2：以 title进行分词处理作为文章关键词
+    # 关键词提取方式 _type = 1：以 title+content使用jieba的extract_tags进行关键词提取
+    #                _type = 2：以 title进行分词处理作为文章关键词
     _type = 2
     for file in files:
         print("开始获取文件 %s 下的关键词。" % file)
         skw = SelectKeyWord(original_data_path + file ,_type)
         skw.writeToFile(file)
-    print("\n关键词获取完毕，数据写入路径 z-othersd/data/keywords")
+    print("\n关键词获取完毕，数据写入路径 z-others/data/keywords")

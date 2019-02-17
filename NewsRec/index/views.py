@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from news.models import new,cate,newhot,newtag,newbrowse,newsim

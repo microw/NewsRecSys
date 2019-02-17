@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """
- Author: thinkgamer
- Desc：每个类型下新闻的相似度计算
+    Author: thinkgamer
+    Desc：
+        代码11-3 每个类型下新闻的相似度计算
 """
 import os
 from NewsRec.settings import DB_HOST,DB_PORT,DB_USER,DB_PASSWD,DB_NAME
@@ -30,6 +31,7 @@ class Correlation:
                 newid, newtags = line.strip().split("\t")
                 news_tags[newid] = newtags
             except:
+                print("读取分词数据过程中出现错误，错误行为：{}".format(line))
                 pass
         return news_tags
 
