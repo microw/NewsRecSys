@@ -41,7 +41,7 @@ Email：Thinkgamer@163.com
 <br>
 <div align="center"><img src="https://raw.githubusercontent.com/Thinkgamer/books/master/0%E3%80%81Picture/wx.png" width="200" /></div>
 <br>
-微信公众号：【数据与算法联盟】
+微信公众号：【搜索与推荐Wiki】
 <br>
 <div align="center"><img src="https://raw.githubusercontent.com/Thinkgamer/books/master/0%E3%80%81Picture/gzh.jpg" width="230"></div>
 
