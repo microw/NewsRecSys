@@ -1,5 +1,12 @@
 ## 说明
-	本项目为演示案例，采用前后端分离实现，后端使用的是Python的Django框架，前端使用的是Vue，数据库为MySQL
+> 本项目为《推荐系统开发实战》一书的演示案例，采用前后端分离实现，后端使用的是Python的Django框架，前端使用的是Vue，数据库为MySQL，禁止用做商业用户，如有需要联系我授权
+
+<center>
+<font color=red>注：《推荐系统开发实战》已经在各大电商上线，感兴趣的朋友可以进行关注！</font>
+</center>
+<center>
+<img src="https://img-blog.csdnimg.cn/20190708234949217.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly90aGlua2dhbWVyLmJsb2cuY3Nkbi5uZXQ=,size_16,color_FFFFFF,t_70" width=300px />
+</center>
 
 ## 实现思路
 - 各大主题下的热度排序
